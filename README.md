@@ -13,6 +13,7 @@ custom port setup, and a shutdown API for stopping the server.
 4. [Running the Application](#running-the-application)
 5. [API Endpoints](#api-endpoints)
 6. [Testing with Postman](#testing-with-postman)
+7. [Documentation](https://documenter.postman.com/preview/11145480-72e90be0-85e6-40d0-89b1-122465119322?environment=&versionTag=latest&apiName=CURRENT&version=latest&documentationLayout=classic-double-column&documentationTheme=light&logo=https%3A%2F%2Fres.cloudinary.com%2Fpostman%2Fimage%2Fupload%2Ft_team_logo%2Fv1%2Fteam%2Fanonymous_team&logoDark=https%3A%2F%2Fres.cloudinary.com%2Fpostman%2Fimage%2Fupload%2Ft_team_logo%2Fv1%2Fteam%2Fanonymous_team&right-sidebar=303030&top-bar=FFFFFF&highlight=FF6C37&right-sidebar-dark=303030&top-bar-dark=212121&highlight-dark=FF6C37)
 
 
 ## Project Structure
