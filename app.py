@@ -1,56 +1,27 @@
 import os
+import warnings
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 import socket
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
+warnings.filterwarnings('ignore')
 
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer
-from gensim.models import Word2Vec
 from training_data import training_data
-
-stemmer = PorterStemmer()
-
-# Preprocessing function for text
-def preprocess_text(text):
-    tokens = word_tokenize(text.lower())
-    return tokens
-
-# Process training data (ensure training_data is a list of tuples (question, response))
-processed_training_data = [(preprocess_text(question), preprocess_text(response)) for question, response in training_data]
-
-# Train Word2Vec model using only the questions from the processed training data
-model = Word2Vec([question for question, response in processed_training_data], min_count=1, window=5)
-
-# Chatbot response function
-def get_chatbot_response(user_message):
-    # Preprocess the user input message
-    preprocessed_message = preprocess_text(user_message)
-    
-    # Get most similar words based on the input
-    try:
-        similar_words = model.wv.most_similar(positive=[preprocessed_message], topn=1)
-        print('similar_words', similar_words)
-        
-        # Get the index of the most similar word
-        most_similar_word = similar_words[0][0]
-        
-        # Find the matching question in the training_data and return the response
-        for question, response in training_data:
-            if most_similar_word in preprocess_text(question):
-                return response
-        
-        # If no match is found, return a default response
-        return "Sorry, I couldn't find a suitable response."
-    
-    except KeyError:
-        return "Sorry, I couldn't understand that."
-      
-      
+   
 # Flask app setup
 app = Flask(__name__)
 CORS(app)
 load_dotenv()
+
+# Convert training data into separate questions and responses lists
+questions = [item[0] for item in training_data]
+responses = [item[1] for item in training_data]
+
+# TF-IDF Vectorizer setup for matching user inputs to predefined questions
+vectorizer = TfidfVectorizer().fit(questions)
 
 # Helper function to find a free port if the default one is in use
 def find_free_port():
@@ -59,6 +30,25 @@ def find_free_port():
     port = new_socket.getsockname()[1]
     new_socket.close()
     return port
+
+def get_chatbot_response(user_message):
+    user_message_vectors = vectorizer.transform([user_message])
+    question_vectors = vectorizer.transform(questions)
+    
+    # calculate cosine similarities between user message and questions
+    similarities = cosine_similarity(user_message_vectors, question_vectors).flatten()
+    
+    # Find the index of the best match bbased on similarity scores
+    best_match_index = np.argmax(similarities)
+    best_match_score = similarities[best_match_index]
+    
+    # Set a threshold to ensure the match is strorng enough
+    threshold = 0.2
+    if best_match_score >= threshold:
+        return responses[best_match_index]
+    else:
+        return "I'm sorry, I didn't quite understand that. Could you pleas rephrase?"
+    
 
 # API route for receiving messages
 @app.route('/chat', methods=['POST'])
@@ -73,6 +63,7 @@ def chatBot():
         response = get_chatbot_response(user_message)
         print('response', response)
         return jsonify({"response": response})
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

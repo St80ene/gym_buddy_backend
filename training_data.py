@@ -88,3 +88,4 @@ training_data = [
     ("How can I get involved in the gym community?", "We offer a variety of group fitness classes, workshops, and social events throughout the month. These are great opportunities to meet other members, stay motivated, and learn something new."),
     ("If I have further questions, how can I contact you?", "If you have any further questions, please don't hesitate to contact our friendly staff at 012345 or email us at info@gymbuddy.com."),
 ]
+

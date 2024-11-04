@@ -18,6 +18,7 @@ model = Word2Vec(processed_training_data, min_count=1, window=5)
 def get_chatbot_response(user_message):
     
     preprocessed_message = preprocess_text(user_message)
+    
     similar_words = model.wv.most_similar(positive=[preprocessed_message], topn=1)
     
     print('similar_words', similar_words)
