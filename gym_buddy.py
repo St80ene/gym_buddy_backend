@@ -11,6 +11,7 @@ responses = [item[1] for item in training_data]
 vectorizer = TfidfVectorizer().fit(questions)
 
 def get_chatbot_response(user_message):
+    # transform questions and responses to vectors for processing
     user_message_vectors = vectorizer.transform([user_message])
     question_vectors = vectorizer.transform(questions)
     
