@@ -100,17 +100,7 @@ The project uses environment variables managed by a `.env` file. Set these varia
   - `400 Bad Request`: If the request payload does not contain a message field.
   - `500 Internal Server Error`: If an unexpected error occurs while processing the request.
  
-2. Shutdown Endpoint
-   - Endpoint: `/shutdown`
-   - Method: `POST`
-   - Description: Shuts down the Flask server gracefully. This endpoint is useful for programmatically stopping the server.
-   - Response:
-  
-  ```json
-  {
-  "message": "Server shutting down..."
-  }
-```
+
 
 ## Testing with Postman
 Setting Up Postman
@@ -126,24 +116,21 @@ Setting Up Postman
        
              ```json
              {
-            "message": "Server shutting down..."
+           "message": "Hello!"
             }
           ```
-      - Shutdown Request:
-        - Method: `POST`
-        - URL: `http://localhost:5000/shutdown`
-        - Description: Use this endpoint to stop the Flask server.
-        - Expected Response:
-            ```json
+      - Expected Response
+       ```json
              {
-            "message": "Server shutting down..."
+             "response": "I'm here to assist you with any questions."
             }
-            ```
-        - Environment Setup in Postman (optional):
-        - To simplify requests, you can create an environment variable for the base_url.
-        - Go to Environments in Postman and add a new environment with a variable:
-            - base_url: `http://localhost:5000`
-        - Replace `http://localhost:5000` in your requests with `{{base_url}}/chat` and `{{base_url}}/shutdown`.
+       ```
+       
+- Environment Setup in Postman (optional):
+  - To simplify requests, you can create an environment variable for the base_url.
+  - Go to Environments in Postman and add a new environment with a variable:
+  - base_url: `http://localhost:5000`
+  - Replace `http://localhost:5000` in your requests with `{{base_url}}/chat` and `{{base_url}}/shutdown`.
        
         
        
