@@ -1,31 +1,30 @@
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer
-from gensim.parsing.preprocessing import preprocess_string
-
-from gensim.models import Word2Vec
+import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from training_data import training_data
 
-stemmer = PorterStemmer()
+# Separate questions and responses from training data
+questions = [item[0] for item in training_data]
+responses = [item[1] for item in training_data]
 
-def preprocess_text(text):
-    tokens = word_tokenize(text.lower())
-    stemmed_tokens = [stemmer.stem(token) for token in tokens]
-    return stemmed_tokens
-
-processed_training_data = [preprocess_text(item) for item in training_data]
-model = Word2Vec(processed_training_data, min_count=1, window=5)
+# TF-IDF Vectorizer setup
+vectorizer = TfidfVectorizer().fit(questions)
 
 def get_chatbot_response(user_message):
+    # transform questions and responses to vectors for processing
+    user_message_vectors = vectorizer.transform([user_message])
+    question_vectors = vectorizer.transform(questions)
     
-    preprocessed_message = preprocess_text(user_message)
-    similar_words = model.wv.most_similar(positive=[preprocessed_message], topn=1)
+    # Calculate cosine similarities between user message and questions
+    similarities = cosine_similarity(user_message_vectors, question_vectors).flatten()
     
-    print('similar_words', similar_words)
-    if not similar_words:
-        return "Sorry, I'm unable to answer this question"
+    # Find the index of the best match based on similarity scores
+    best_match_index = np.argmax(similarities)
+    best_match_score = similarities[best_match_index]
     
-    # Assuming questions are first element in each trainind data pair
-    response_index = 0
-    response = training_data[similar_words[0][0][response_index]]
-    
-    return response
+    # Set a threshold to ensure the match is strong enough
+    threshold = 0.2
+    if best_match_score >= threshold:
+        return responses[best_match_index]
+    else:
+        return "I'm sorry, I didn't quite understand that. Could you please rephrase?"
