@@ -32,7 +32,7 @@ if __name__ == "__main__":
     
     try:
         print('App running...')
-        app.run(debug=True, port=assigned_port)
+        app.run(port=assigned_port)
     except OSError:
         # Function to find a free port
         def find_free_port():
