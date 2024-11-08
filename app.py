@@ -28,21 +28,6 @@ def chatBot():
     
 
 if __name__ == "__main__":
+    # Read the port from the environment variable, default to 5000 if not set
     assigned_port = int(os.getenv('PORT', 5000))
-    
-    try:
-        print('App running...')
-        app.run(port=assigned_port)
-    except OSError:
-        # Function to find a free port
-        def find_free_port():
-            import socket
-            new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            new_socket.bind(('0.0.0.0', 0))  # Bind to any IP and an available port
-            port = new_socket.getsockname()[1]
-            new_socket.close()
-            return port
-
-        free_port = find_free_port()
-        print(f"Assigned port {assigned_port} is in use. Switching to port {free_port}")
-        app.run(port=free_port)
+    app.run(host='0.0.0.0', port=assigned_port)
