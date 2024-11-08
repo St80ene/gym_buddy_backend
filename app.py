@@ -45,4 +45,4 @@ if __name__ == "__main__":
 
         free_port = find_free_port()
         print(f"Assigned port {assigned_port} is in use. Switching to port {free_port}")
-        app.run(debug=True, port=free_port)
+        app.run(port=free_port)
