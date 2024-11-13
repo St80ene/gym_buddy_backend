@@ -14,6 +14,7 @@ custom port setup, and a shutdown API for stopping the server.
 5. [API Endpoints](#api-endpoints)
 6. [Testing with Postman](#testing-with-postman)
 7. [Documentation](https://documenter.postman.com/preview/11145480-72e90be0-85e6-40d0-89b1-122465119322?environment=&versionTag=latest&apiName=CURRENT&version=latest&documentationLayout=classic-double-column&documentationTheme=light&logo=https%3A%2F%2Fres.cloudinary.com%2Fpostman%2Fimage%2Fupload%2Ft_team_logo%2Fv1%2Fteam%2Fanonymous_team&logoDark=https%3A%2F%2Fres.cloudinary.com%2Fpostman%2Fimage%2Fupload%2Ft_team_logo%2Fv1%2Fteam%2Fanonymous_team&right-sidebar=303030&top-bar=FFFFFF&highlight=FF6C37&right-sidebar-dark=303030&top-bar-dark=212121&highlight-dark=FF6C37)
+8. [Live-URL](https://gym-buddy-backend-rxip.onrender.com)
 
 
 ## Project Structure
@@ -133,7 +134,11 @@ Setting Up Postman
   - base_url: `http://localhost:5000`
   - Replace `http://localhost:5000` in your requests with `{{base_url}}/chat` and `{{base_url}}/shutdown`.
        
-        
+## Live URL: 
+
+```bash
+https://gym-buddy-backend-rxip.onrender.com
+```      
        
 ### Contact
 If you have any questions or suggestions, please feel free to reach out:
