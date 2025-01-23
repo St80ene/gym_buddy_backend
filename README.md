@@ -44,8 +44,8 @@ Prerequisites
 1. Clone the Repository
 
   ```bash
-  git clone https://github.com/your-username/flask-chatbot-api.git
-  cd flask-chatbot-api
+  ggit@github.com:St80ene/gym_buddy_backend.git
+  cd gym_buddy_backend
   ```
 2. Create a Virtual Environment
 
